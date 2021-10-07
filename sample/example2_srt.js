@@ -1,8 +1,14 @@
 0
 00:00:00,000 --> 00:00:20,000
+var g=document.createElement("canvas");
+g.id = "canvas";
+document.getElementsByTagName( 'body' )[ 0 ].appendChild(g);
+var g2=document.createElement("div");
+g2.id = "label-container";
+document.getElementsByTagName( 'body' )[ 0 ].appendChild(g2);
 loadScript('//cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js',function(e){
     loadScript('//cdn.jsdelivr.net/npm/@teachablemachine/pose@0.8/dist/teachablemachine-pose.min.js',function(e2){
-	URL = "./my_model/";
+	URL = "https://teachablemachine.withgoogle.com/models/zbz6WeQL8/";
 	model = null;
 	let webcam, ctx, labelContainer, maxPredictions;
 	init = async function init() {
@@ -29,22 +35,13 @@ loadScript('//cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js',functi
 		labelContainer.appendChild(document.createElement("div"));
             }
 	}
+	init();
 	loop = async function loop(timestamp) {
             webcam.update(); // update the webcam frame
             await predict();
 	    console.log("test");
             window.requestAnimationFrame(loop);
 	}
-	video = document.getElementById("video")
-        navigator.mediaDevices.getUserMedia({
-            video: true,
-            audio: false,
-        }).then(stream => {
-            video.srcObject = stream;
-            video.play()
-        }).catch(e => {
-            console.log(e)
-        })
 	prediction = null;
 	currentpose = null;
 	ary = null;
@@ -59,42 +56,24 @@ loadScript('//cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js',functi
 		      prediction[i].className + ": " + prediction[i].probability.toFixed(2);
 		labelContainer.childNodes[i].innerHTML = classPrediction;
 	    }
-	    drowPose(pose);
+	    drawPose(pose);
 	    // finally draw the poses
 	    //console.log(typeof(pose));
 	    //ここに追記する
 	    // １番確率の高いポーズを求める。    
 	    // その確率が予め決めた閾値以上であったら
 	    // そのポーズのラベルを、グローバル変数currentPoseに書き込む
-	    for (let i = 0;i<10;i++) {
-		ary.push(prediction[i] / 10);
-	    }
-	    aryMax = function (a, b) {return Math.max(a, b);}
-	    max = ary.reduce(aryMax);
-	    console.log(max);
-	    if (max > 0.6) {
-		currentpose = pose.lavel;
-	    }
-	}
-	judge = function judge() {
-	    video = document.getElementById("video")
-            navigator.mediaDevices.getUserMedia({
-		video: true,
-		audio: false,
-            }).then(stream => {
-		video.srcObject = stream;
-		video.play()
-            }).catch(e => {
-		console.log(e)
-            })
-	    for (let i = 0;i<10;i++) {
-		ary.push(prediction[i] / 10);
-	    }
-	    aryMax = function (a, b) {return Math.max(a, b);}
-	    max = ary.reduce(aryMax);
-	    if (max > 0.6) {
-		currentpose = pose.lavel;
-	    }
+	    let max_id = 0;
+	    let max = -1;
+	    for (let i=0;i<maxPredictions;i++){
+		    if (prediction[i].probability > max){
+		      max_id = i;
+		      max = prediction[i].probability;
+		  }
+		}
+	    if (prediction[max_id].probability > 0.6)
+		    currentpose = prediction[max_id].className;
+	    console.log(currentpose);
 	}
 	function drawPose(pose) {
 	    if (webcam.canvas) {
@@ -112,13 +91,72 @@ loadScript('//cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js',functi
 
 1
 00:00:55,000 --> 00:01:09,000
-//alert("1つ目のポーズ");
-//init();
-//loop();
-//predict();
-//judge();
-//console.log(max);
-if (currentpose != "安楽座_左ねじれ") {
-    player.seekTo(40,true);
-    //alertのokをおしてから巻き戻す＝＞ポーズが取れていない秒数を開始時間にしてから書く
+if (currentpose != "肩甲骨") {
+    player.seekTo(40,true);//0:40、15s ago
+}
+
+2
+00:01:46,000 --> 00:01:55,000
+if (currentpose != "肘した") {
+    player.seekTo(101,true);//1:41、5s ago
+}
+
+3
+00:02:12,000 --> 00:02:20,000
+if (currentpose != "右傾け") {
+    player.seekTo(120,true);//2:00、12s ago
+}
+
+4
+00:02:30,000 --> 00:02:45,000
+if (currentpose != "左傾け") {
+    player.seekTo(146,true);//2:26、4s ago
+}
+
+5
+00:03:00,000 --> 00:03:20,000
+if (currentpose != "首ぐるぐる") {
+    player.seekTo(168,true);//2:48、12s ago
+}
+
+6
+00:03:40,000 --> 00:04:55,000
+if (currentpose != "合掌ピーン") {
+    player.seekTo(218,true);//3:38、2s ago
+}
+
+7
+00:05:25,000 --> 00:06:00,000
+if (currentpose != "うさぎのポーズ") {
+    player.seekTo(300,true);//5:00、25s ago
+}
+
+8
+00:06:15,000 --> 00:06:43,000
+if (currentpose != "肩こり解消") {
+    player.seekTo(360,true);//6:00、15s ago
+}
+
+9
+00:06:51,000 --> 00:07:20,000
+if (currentpose != "おやすみ_おでこ") {
+    player.seekTo(405,true);//6:45、6s ago
+}
+
+10
+00:07:30,000 --> 00:07:42,000
+if (currentpose != "足たたく") {
+    player.seekTo(444,true);//7:24、6s ago
+}
+
+10
+00:08:16,000 --> 00:08:55,000
+if (currentpose != "仰向け_腰上げ") {
+    player.seekTo(470,true);//7:50、26s ago
+}
+
+11
+00:09:20,000 --> 00:10:20,000
+if (currentpose != "後転直前") {
+    player.seekTo(540,true);//9:00、20s ago
 }
