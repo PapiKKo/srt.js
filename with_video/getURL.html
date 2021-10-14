@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>動画使って何する?</title>
+    <script src="./getQuery.js"></script>
+  </head>
+  <body>
+    <h1>動画使って何する?</h1>
+     <p>使いたいYoutube動画のリンクを下のテキストボックスに入力してください</p>
+    <input type="text" id="input-message" size="80">
+    <form name="sampleForm" action="">
+      <br>
+      <label>
+	<input type="radio" name="menu" value="ヨガ">
+	ヨガ
+      </label>
+      <label>
+	<input type="radio" name="menu" value="筋トレ">
+	筋トレ
+      </label>
+      <label>
+	<input type="radio" name="menu" value="BGM">
+	BGM
+      </label>
+      <input type="button" onclick="execute()" value="URL先へジャンプ">
+    </form>
+    <div id="result"></div>
+  </body>
+</html>
