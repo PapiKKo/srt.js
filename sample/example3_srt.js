@@ -1,5 +1,6 @@
 0
 00:00:00,000 --> 00:00:20,000
+doOnce[0]=true;
 var g=document.createElement("div");
 g.id = "webcam-container";
 document.getElementsByTagName( 'body' )[ 0 ].appendChild(g);
