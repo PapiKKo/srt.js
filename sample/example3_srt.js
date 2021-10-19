@@ -12,28 +12,6 @@ loadScript('//cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js',functi
 	URL = "https://teachablemachine.withgoogle.com/models/L2MQt0wYW/";
 	model = null;
 	let webcam, labelContainer, maxPredictions;
-	    // タイマー部
-	//let stop;
-	//let progress;
-	//let addition = 0;
-	//const record = document.querySelector("p.counter");
-	// カウンター
-	//timer = function timer() {
-	//    const start = new Date().getTime();
-	//    stop = setInterval(function() {
-	//	progress = new Date().getTime() - start + addition;
-	//	const noms = progress / 1000;
-	//	const millisecond = progress ? ("0" + String(noms).split(".")[1]).slice(-2) : "00";
-	//	const nos = Math.trunc(noms);
-	//	const second = nos ? ("0" + (nos % 86400 % 3600 %60)).slice(-2) : "00";
-	//	const minute = nos >= 60 ? ("0" + Math.trunc(nos % 86400 % 3600 / 60)).slice(-2) : "00";
-	//	const hour = nos >= 360 ? ("0" + Math.trunc(nos % 86400 / 3600)).slice(-2) : "00";
-	//	if (progress < 86400) {
-	//	    record.textContent = hour + ":" + minute + "." + second + "." + millisecond;
-	//	} else {
-	//	    record.textContent = "00:00.00.00"; clearInterval(stop); }
-	  //  }, 10);
-	//}
 	init = async function init() {
 	    modelURL = URL + "model.json";
 	    metadataURL = URL + "metadata.json";
@@ -58,26 +36,16 @@ loadScript('//cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js',functi
             }
 	}
 	init();
-	//clearInterval(stop);
-	//progress = 0;
-	//record.textContent = "00:00.00.00";
-	//addition = 0;
 	loop = async function loop(timestamp) {
             webcam.update(); // update the webcam frame
             await predict();
 	    console.log("test");
 	    if (currentpose == "スマホ") {
 		player.pauseVideo();
-		//clearInterval(stop);
-    		//addition = progress;
 	    }if (currentpose == "離席") {
 		player.pauseVideo();
-		//clearInterval(stop);
-    		//addition = progress;
 	    }if (currentpose == "PC作業") {
 		player.playVideo();
-		//progress = 0;
-    		//timer();
 	    }
             window.requestAnimationFrame(loop);
 	}
