@@ -60,7 +60,7 @@ loadScript('//cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js',functi
 	init();
 	clearInterval(stop);
 	progress = 0;
-	record.textContent = "00:00.00.00";
+	//record.textContent = "00:00.00.00";
 	addition = 0;
 	loop = async function loop(timestamp) {
             webcam.update(); // update the webcam frame
