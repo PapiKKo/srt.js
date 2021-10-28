@@ -1,6 +1,6 @@
 0
-00:00:00,000 --> 00:00:20,000
-doOnce[0]=true;
+00:00:00,000 --> 00:00:15,000
+doOnce[0] = true;
 var g=document.createElement("div");
 g.id = "webcam-container";
 document.getElementsByTagName( 'body' )[ 0 ].appendChild(g);
@@ -36,17 +36,11 @@ loadScript('//cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js',functi
             }
 	}
 	init();
+	var music = new Audio('./with_video/white_noise1.mp3');
 	loop = async function loop(timestamp) {
             webcam.update(); // update the webcam frame
             await predict();
 	    console.log("test");
-	    if (currentpose == "スマホ") {
-		player.pauseVideo();
-	    }if (currentpose == "離席") {
-		player.pauseVideo();
-	    }if (currentpose == "PC作業") {
-		player.playVideo();
-	    }
             window.requestAnimationFrame(loop);
 	}
 	prediction = null;
@@ -57,7 +51,7 @@ loadScript('//cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js',functi
 	    // predict can take in an image, video or canvas html element
             const prediction = await model.predict(webcam.canvas);
             for (let i = 0; i < maxPredictions; i++) {
-            const classPrediction =
+		const classPrediction =
                   prediction[i].className + ": " + prediction[i].probability.toFixed(2);
 		labelContainer.childNodes[i].innerHTML = classPrediction;
             }
@@ -82,3 +76,26 @@ loadScript('//cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js',functi
     });
 });
 
+1
+00:00:15,000
+const music = new Audio('./white_noise1.mp3');
+music.volume = 0.5;
+function update(callback) {
+    // console.log(Math.round(callback / 10) * 10);
+    if (Math.round(callback / 10) * 10 % 1000 == 0) {
+	if (currentpose == "スマホ") {
+	    player.playVideo();
+	    music.play();
+	    music.loop = true;
+	}if (currentpose == "離席") {
+	    player.pauseVideo();
+	    music.pause();
+	}if (currentpose == "PC作業") {
+	    player.playVideo();
+	    music.pause();
+	}
+    }
+    window.requestAnimationFrame(update);
+}
+window.requestAnimationFrame(update);
+// window.cancelAnimationFrame(update);
