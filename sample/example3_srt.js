@@ -36,7 +36,6 @@ loadScript('//cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js',functi
             }
 	}
 	init();
-	var music = new Audio('./with_video/white_noise1.mp3');
 	loop = async function loop(timestamp) {
             webcam.update(); // update the webcam frame
             await predict();
