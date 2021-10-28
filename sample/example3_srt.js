@@ -78,7 +78,7 @@ loadScript('//cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js',functi
 
 1
 00:00:15,000
-const music = new Audio('./white_noise1.mp3');
+const music = new Audio('../sample/white_noise1.mp3');
 music.volume = 0.5;
 function update(callback) {
     // console.log(Math.round(callback / 10) * 10);
