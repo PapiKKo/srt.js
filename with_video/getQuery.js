@@ -12,7 +12,7 @@ function execute() {
 
     if(yoga.checked) {
         result.innerHTML = yoga.value + "が選択されています。";
-	window.open("https://papikko.github.io/srt.js/index.htm?"+params+"&surl=../sample/example2_srt.js",'_blank');
+	window.open("https://papikko.github.io/srt.js/index.htm?"+params+"&surl=./sample/example2_srt.js",'_blank');
         none = false;
     }
     if(kintore.checked) {
@@ -21,7 +21,7 @@ function execute() {
     }
     if(bgm.checked) {
         result.innerHTML += bgm.value + "が選択されています。";
-	window.open("https://papikko.github.io/srt.js/index.htm?"+params+"&surl=../sample/example3_srt.js",'_blank');
+	window.open("https://papikko.github.io/srt.js/index.htm?"+params+"&surl=./sample/example3_srt.js",'_blank');
         none = false;
     }
 }
