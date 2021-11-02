@@ -81,6 +81,11 @@ const music = new Audio('./with_video/white_noise1.mp3');
 music.volume = 0.5;
 function start(id) {
     id = setInterval(function () {
+	if (currentpose == "drinking") {
+	    player.playVideo();
+	    music.pause();
+	    console.log("水分補給中");
+	}
 	if (currentpose == "スマホ") {
 	    player.playVideo();
 	    music.play();
@@ -93,10 +98,12 @@ function start(id) {
 	}if (currentpose == "PC作業") {
 	    if (player.getPlayerState() == 1) {
 		player.playVideo();
+		music.pause();
 		console.log("勉強してまーーーーーーーす");
 	    }
 	    if (player.getPlayerState() == 2) {
 		player.pauseVideo();
+		music.pause();
 		console.log("ちょっと停止しまーーーーす");
 	    }
 	    music.pause();
@@ -107,25 +114,3 @@ function stop(id) {
     clearInterval(id);
 }
 start('id');
-// stop('id');
-/*
-function update(callback) {
-    // console.log(Math.round(callback / 10) * 10);
-    if (Math.round(callback / 10) * 10 % 1000 == 0) {
-	if (currentpose == "スマホ") {
-	    player.playVideo();
-	    music.play();
-	    music.loop = true;
-	}if (currentpose == "離席") {
-	    player.pauseVideo();
-	    music.pause();
-	}if (currentpose == "PC作業") {
-	    player.playVideo();
-	    music.pause();
-	}
-    }
-    window.requestAnimationFrame(update);
-}
-window.requestAnimationFrame(update);
-// window.cancelAnimationFrame(update);
-*/
