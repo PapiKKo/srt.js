@@ -39,7 +39,7 @@ loadScript('//cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js',functi
 	loop = async function loop(timestamp) {
             webcam.update(); // update the webcam frame
             await predict();
-	    console.log("test");
+	    //console.log("test");
             window.requestAnimationFrame(loop);
 	}
 	prediction = null;
@@ -70,7 +70,7 @@ loadScript('//cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js',functi
 		}
 	    if (prediction[max_id].probability > 0.6)
 		    currentpose = prediction[max_id].className;
-	    console.log(currentpose);
+	    //console.log(currentpose);
 	}
     });
 });
@@ -79,6 +79,36 @@ loadScript('//cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js',functi
 00:00:15,000
 const music = new Audio('./with_video/white_noise1.mp3');
 music.volume = 0.5;
+function start(id) {
+    id = setInterval(function () {
+	if (currentpose == "スマホ") {
+	    player.playVideo();
+	    music.play();
+	    music.loop = true;
+	    console.log("スマホ見てまーーーーーーす");
+	}if (currentpose == "離席") {
+	    player.pauseVideo();
+	    music.pause();
+	    console.log("席離れてまーーーーーーーす");
+	}if (currentpose == "PC作業") {
+	    if (player.getPlayerState() == 1) {
+		player.playVideo();
+		console.log("勉強してまーーーーーーーす");
+	    }
+	    if (player.getPlayerState() == 2) {
+		player.pauseVideo();
+		console.log("ちょっと停止しまーーーーす");
+	    }
+	    music.pause();
+	}
+    }, 1000);
+}
+function stop(id) {
+    clearInterval(id);
+}
+start('id');
+// stop('id');
+/*
 function update(callback) {
     // console.log(Math.round(callback / 10) * 10);
     if (Math.round(callback / 10) * 10 % 1000 == 0) {
@@ -98,3 +128,4 @@ function update(callback) {
 }
 window.requestAnimationFrame(update);
 // window.cancelAnimationFrame(update);
+*/
