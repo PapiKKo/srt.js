@@ -68,10 +68,11 @@ loadScript('//cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js',functi
 		      max = prediction[i].probability;
 		  }
 		}
-	    if (prediction[max_id].probability > 0.6)
+	    if (prediction[max_id].probability > 0.8)
 		    currentpose = prediction[max_id].className;
 	    //console.log(currentpose);
 	}
+	study_time = 0
     });
 });
 
@@ -79,29 +80,44 @@ loadScript('//cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js',functi
 00:00:15,000
 const music = new Audio('./with_video/white_noise1.mp3');
 music.volume = 0.5;
+point = 0;
+time = 0;
 function start(id) {
     id = setInterval(function () {
 	if (currentpose == "drinking") {
+	    point = 0;
 	    player.playVideo();
 	    music.pause();
 	    console.log("水分補給中");
 	}
 	if (currentpose == "スマホ") {
-	    player.playVideo();
-	    music.play();
-	    music.loop = true;
-	    console.log("スマホ見てまーーーーーーす");
+	    point++;
+	    console.log(point);
+	    if (point == 3) {
+		player.playVideo();
+		music.play();
+		music.loop = true;
+		console.log("スマホ見てまーーーーーーす");
+		point = 1;
+		console.log(point);
+	    }
 	}if (currentpose == "離席") {
+	    point = 0;
 	    player.pauseVideo();
 	    music.pause();
 	    console.log("席離れてまーーーーーーーす");
 	}if (currentpose == "PC作業") {
 	    if (player.getPlayerState() == 1) {
+		point = 0;
+		time++;
+		study_time++;
 		player.playVideo();
 		music.pause();
 		console.log("勉強してまーーーーーーーす");
+		console.log("勉強時間：" + study_time + "秒");
 	    }
 	    if (player.getPlayerState() == 2) {
+		point = 0;
 		player.pauseVideo();
 		music.pause();
 		console.log("ちょっと停止しまーーーーす");
