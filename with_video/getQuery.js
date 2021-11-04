@@ -1,7 +1,6 @@
 function execute() {
     var yoga = document.sampleForm.menu[0];
-    var kintore = document.sampleForm.menu[1];
-    var bgm = document.sampleForm.menu[2];
+    var bgm = document.sampleForm.menu[1];
     var result = document.getElementById("result");
     result.innerHTML = "";
     var none = true;
@@ -12,16 +11,16 @@ function execute() {
 
     if(yoga.checked) {
         result.innerHTML = yoga.value + "が選択されています。";
-	window.open("https://papikko.github.io/srt.js/index.htm?"+params+"&surl=./sample/example2_srt.js",'_blank');
-        none = false;
-    }
-    if(kintore.checked) {
-        result.innerHTML += kintore.value + "が選択されています。";
+	window.open("http://localhost:4245/srt.js/index.htm?"+params+"&surl=./sample/example2_srt.js",'_blank');
         none = false;
     }
     if(bgm.checked) {
         result.innerHTML += bgm.value + "が選択されています。";
-	window.open("https://papikko.github.io/srt.js/index.htm?"+params+"&surl=./sample/example3_srt.js",'_blank');
+	window.open("http://localhost:4245/srt.js/index.htm?"+params+"&surl=./sample/example3_srt.js",'_blank');
         none = false;
     }
+}
+function btnCopy() {
+    const txt = document.querySelector('#ulID').innerText;
+    navigator.clipboard.writeText(txt)
 }
