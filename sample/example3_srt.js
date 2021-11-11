@@ -4,14 +4,18 @@ doOnce[0] = true;
 var g=document.createElement("div");
 g.id = "webcam-container";
 document.getElementsByTagName( 'body' )[ 0 ].appendChild(g);
+var time=document.createElement("div");
+time.id = "stopwatch";
+document.getElementsByTagName( 'body' )[ 0 ].appendChild(time);
 var g2=document.createElement("div");
 g2.id = "label-container";
 document.getElementsByTagName( 'body' )[ 0 ].appendChild(g2);
 loadScript('//cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js',function(e){
     loadScript('//cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js',function(e2){
-	URL = "https://teachablemachine.withgoogle.com/models/L2MQt0wYW/";
+	URL = "https://teachablemachine.withgoogle.com/models/qzNXZoAh8S/";
 	model = null;
 	let webcam, labelContainer, maxPredictions;
+	stopwatch = null;
 	init = async function init() {
 	    modelURL = URL + "model.json";
 	    metadataURL = URL + "metadata.json";
@@ -34,11 +38,16 @@ loadScript('//cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js',functi
             for (let i = 0; i < maxPredictions; i++) { // and class labels
 		labelContainer.appendChild(document.createElement("div"));
             }
+	    stopwatch = document.getElementById("stopwatch");
+	    stopwatch.appendChild(document.createElement("div"));
+	    stopwatch.innerHTML = "00:00:00";
 	}
 	init();
+	//start();
 	loop = async function loop(timestamp) {
             webcam.update(); // update the webcam frame
             await predict();
+	    //study('id');
 	    //console.log("test");
             window.requestAnimationFrame(loop);
 	}
@@ -72,51 +81,76 @@ loadScript('//cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js',functi
 		    currentpose = prediction[max_id].className;
 	    //console.log(currentpose);
 	}
-	study_time = 0
+	//経過時刻を更新するための変数。 初めだから0で初期化
+	elapsedTime = 0;
+	timerId = 0;
+	timeToadd = 0;
+	sh = 00;
+	sm = 00;
+	ss = 00;
     });
 });
 
 1
-00:00:15,000
+00:00:30,000
+alert("準備ができたら、OK をクリック");
 const music = new Audio('./with_video/white_noise1.mp3');
 music.volume = 0.5;
 point = 0;
-time = 0;
-function start(id) {
+startTime = 0;
+stopTime = 0;
+text = "START";
+study('id');
+function study(id) {
     id = setInterval(function () {
 	if (currentpose == "drinking") {
+	    if (text == "START") {
+		stop();
+		console.log("if stop()");
+	    }
 	    point = 0;
-	    player.playVideo();
 	    music.pause();
 	    console.log("水分補給中");
 	}
 	if (currentpose == "スマホ") {
 	    point++;
-	    console.log(point);
+	    if (text == "START") {
+		stop();
+		console.log("if stop()");
+	    }
 	    if (point == 3) {
 		player.playVideo();
 		music.play();
 		music.loop = true;
 		console.log("スマホ見てまーーーーーーす");
 		point = 1;
-		console.log(point);
 	    }
 	}if (currentpose == "離席") {
+	    if (text == "START") {
+		stop();
+		console.log("if stop()");
+	    }
 	    point = 0;
 	    player.pauseVideo();
 	    music.pause();
 	    console.log("席離れてまーーーーーーーす");
-	}if (currentpose == "PC作業") {
+	}if (currentpose == "勉強") {
 	    if (player.getPlayerState() == 1) {
+		if (text == "STOP") {
+		    start();
+		    console.log("if start()");
+		}
 		point = 0;
-		time++;
-		study_time++;
 		player.playVideo();
 		music.pause();
-		console.log("勉強してまーーーーーーーす");
-		console.log("勉強時間：" + study_time + "秒");
+		//console.log("勉強してまーーーーーーーす");
+		//console.log("勉強時間：" + sh + ":"+ sm + ":" +ss);
 	    }
 	    if (player.getPlayerState() == 2) {
+		if (text == "START") {
+		    stop();
+		    console.log("if stop()");
+		}
 		point = 0;
 		player.pauseVideo();
 		music.pause();
@@ -129,4 +163,30 @@ function start(id) {
 function stop(id) {
     clearInterval(id);
 }
-start('id');
+start = function start() {
+    startTime = performance.now();
+    text = "START";
+    countUp();
+}
+stop = function stop() {
+    text = "STOP";
+    clearTimeout(timerId);
+    timeToadd += performance.now() - startTime;
+}
+//再帰的に使える用の関数
+countUp = function countUp(){
+    timerId = setTimeout(function(){
+	elapsedTime = performance.now() - startTime + timeToadd;
+	updateTimetText();
+	countUp();
+    },10);
+}
+updateTimetText = function updateTimetText(){
+    sh = Math.floor(elapsedTime / 3600000);
+    sm = Math.floor(elapsedTime / 60000);
+    ss = Math.floor(elapsedTime % 60000 / 1000);	    
+    sh = ('0' + sh).slice(-2);
+    sm = ('0' + sm).slice(-2);
+    ss = ('0' + ss).slice(-2);
+    stopwatch.innerHTML = sh + ":"+ sm + ":" +ss;
+}
