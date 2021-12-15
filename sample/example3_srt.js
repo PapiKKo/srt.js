@@ -164,7 +164,7 @@ function study(id) {
 		    console.log("if stop()");
 		    console.log("ちょっと停止しまーーーーす");
 		}
-		if (text == "STOP") {
+		else if (text == "STOP") {
 		    start();
 		    player.playVideo();
 		    music.pause();
