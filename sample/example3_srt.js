@@ -7,9 +7,6 @@ document.getElementsByTagName( 'body' )[ 0 ].appendChild(g);
 var time=document.createElement("div");
 time.id = "stopwatch";
 document.getElementsByTagName( 'body' )[ 0 ].appendChild(time);
-var g2=document.createElement("div");
-g2.id = "label-container";
-document.getElementsByTagName( 'body' )[ 0 ].appendChild(g2);
 loadScript('//cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js',function(e){
     loadScript('//cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js',function(e2){
 	URL = "https://teachablemachine.withgoogle.com/models/L2MQt0wYW/";
@@ -26,7 +23,7 @@ loadScript('//cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js',functi
             model = await tmImage.load(modelURL, metadataURL);
             maxPredictions = model.getTotalClasses();
 	    // Convenience function to setup a webcam
-            size = 200;
+            size = 400;
             flip = true; // whether to flip the webcam
             webcam = new tmImage.Webcam(size, size, flip); // width, height, flip
             await webcam.setup(); // request access to the webcam
@@ -34,10 +31,9 @@ loadScript('//cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js',functi
 	    window.requestAnimationFrame(loop);
 	    // append/get elements to the DOM
             document.getElementById("webcam-container").appendChild(webcam.canvas);
-            labelContainer = document.getElementById("label-container");
-            for (let i = 0; i < maxPredictions; i++) { // and class labels
-		labelContainer.appendChild(document.createElement("div"));
-            }
+            //labelContainer = document.getElementById("label-container");
+            //for (let i = 0; i < maxPredictions; i++) { // and class labels
+		//labelContainer.appendChild(document.createElement("div"));
 	    stopwatch = document.getElementById("stopwatch");
 	    stopwatch.appendChild(document.createElement("div"));
 	    stopwatch.innerHTML = "00:00:00";
@@ -61,7 +57,7 @@ loadScript('//cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js',functi
             for (let i = 0; i < maxPredictions; i++) {
 		const classPrediction =
                   prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-		labelContainer.childNodes[i].innerHTML = classPrediction;
+		//labelContainer.childNodes[i].innerHTML = classPrediction;
             }
 	    // finally draw the poses
 	    //console.log(typeof(pose));
@@ -106,6 +102,7 @@ function study(id) {
 	    if (text == "START") {
 		stop();
 		console.log("if stop()");
+		console.log("水分補給中");
 	    }
 	    point = 0;
 	    music.pause();
@@ -128,6 +125,7 @@ function study(id) {
 	    if (text == "START") {
 		stop();
 		console.log("if stop()");
+		console.log("席離れてまーーーーーーーす");
 	    }
 	    point = 0;
 	    player.pauseVideo();
@@ -149,6 +147,7 @@ function study(id) {
 		if (text == "START") {
 		    stop();
 		    console.log("if stop()");
+		    console.log("ちょっと停止しまーーーーす");
 		}
 		point = 0;
 		player.pauseVideo();
@@ -156,6 +155,21 @@ function study(id) {
 		console.log("ちょっと停止しまーーーーす");
 	    }
 	    music.pause();
+	}
+	if(currentpose == "手のひら") {
+		if (text == "START") {
+		    stop();
+		    player.pauseVideo();
+		    music.pause();
+		    console.log("if stop()");
+		    console.log("ちょっと停止しまーーーーす");
+		}
+		if (text == "STOP") {
+		    start();
+		    player.playVideo();
+		    music.pause();
+		    console.log("if start()");
+		}
 	}
     }, 1000);
 }
