@@ -20,9 +20,9 @@ loadScript('//cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js',functi
 	    model = await tmPose.load(modelURL, metadataURL);
 	    maxPredictions = model.getTotalClasses();
 	    // Convenience function to setup a webcam
-            size = 200;
+            size = 300;
             flip = true; // whether to flip the webcam
-            webcam = new tmPose.Webcam(size, size, flip); // width, height, flip
+            webcam = new tmPose.Webcam(400, size, flip); // width, height, flip
             await webcam.setup(); // request access to the webcam
             await webcam.play();
 	    window.requestAnimationFrame(loop);
