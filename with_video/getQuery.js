@@ -14,13 +14,13 @@ function execute() {
     if(yoga.checked) {
         result.innerHTML = yoga.value + "が選択されています。";
 	ankert.innerHTML = "https://forms.gle/MyJSeqMpmKfbRP4z7";
-	window.open("http://localhost:4245/srt.js/index.htm?"+params+"&surl=./sample/example2_srt.js",'_blank');
+	window.open("http://papikko.github.io/srt.js/index.htm?"+params+"&surl=./sample/example2_srt.js",'_blank');
         none = false;
     }
     if(bgm.checked) {
         result.innerHTML += bgm.value + "が選択されています。";
 	ankert.innerHTML = "https://forms.gle/x7rm7X6VNzNp674s8";
-	window.open("http://localhost:4245/srt.js/index.htm?"+params+"&surl=./sample/example3_srt.js",'_blank');
+	window.open("http://papikko.github.io/srt.js/index.htm?"+params+"&surl=./sample/example3_srt.js",'_blank');
         none = false;
     }
 }
