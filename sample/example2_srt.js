@@ -90,7 +90,7 @@ loadScript('//cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js',functi
 });
 
 1
-00:00:55,000 --> 00:01:09,000
+00:01:00,000 --> 00:01:09,000
 if (currentpose != "肩甲骨") {
     player.seekTo(40,true);//0:40、15s ago
 }
