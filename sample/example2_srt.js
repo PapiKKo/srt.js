@@ -121,7 +121,7 @@ if (currentpose != "首ぐるぐる") {
 
 6
 00:03:40,000 --> 00:04:55,000
-if (currentpose != "合掌ピーン") {
+if (currentpose != "合掌上ピーン") {
     player.seekTo(218,true);//3:38、2s ago
 }
 
@@ -149,13 +149,13 @@ if (currentpose != "足たたく") {
     player.seekTo(444,true);//7:24、6s ago
 }
 
-10
+11
 00:08:16,000 --> 00:08:55,000
 if (currentpose != "仰向け_腰上げ") {
     player.seekTo(470,true);//7:50、26s ago
 }
 
-11
+12
 00:09:20,000 --> 00:10:20,000
 if (currentpose != "後転直前") {
     player.seekTo(540,true);//9:00、20s ago
